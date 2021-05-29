@@ -6,9 +6,9 @@ const db = mysql.createConnection(
         host: 'localhost',
         user: 'root',
         password: 'kool123kat',
-        database: 'election'
+        database: 'tracker'
     },
-    console.log('Connected to the election database')
+    console.log('Connected to the tracker database')
 );
 
 db.connect();
