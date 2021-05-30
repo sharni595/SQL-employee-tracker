@@ -40,22 +40,42 @@ async function viewDepartments(){
 
 //view all roles
 async function viewRoles(){
-    const roles = await db.promise().query(`SELECT * FROM roles`);
+    const roles = await db.promise().query(`SELECT roles.id, roles.title, departments.name AS department, roles.salary FROM roles
+                                                LEFT JOIN departments ON roles.department_id = departments.id`);
     console.table(roles[0]);
     askQuestions();
 };
 
 //view all employees
 async function viewEmployees(){
-    const employees = await db.promise().query(`SELECT * FROM employees`);
+    const employees = await db.promise().query(`SELECT employees.id, employees.first_name, employees.last_name, roles.title AS title, departments.name AS department, roles.salary, 
+                                                    CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees 
+                                                    LEFT JOIN employees manager ON manager.id = employees.manager_id 
+                                                    LEFT JOIN roles ON employees.role_id = roles.id 
+                                                    LEFT JOIN departments ON departments.id = roles.department_id`);
     console.table(employees[0]);
     askQuestions();
 };
 
 //add a department
 async function addDepartment(){
-    
-}
+    console.log('hello');
+
+    const addDept = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'deptName',
+            message: 'What is the name of the new department?'
+        }
+    ])
+
+    const answer = addDept.value;
+    await db.promise().query(`INSERT INTO departments(name) VALUE (?)`, answer);
+    console.log(`The ${answer} department has been added!`);
+    askQuestions();
+};
+
+//add role
 
 
 //update employee role
@@ -68,7 +88,7 @@ async function updateRole() {
         console.log(person);
         return {
             name: `${person.first_name} ${person.last_name}`,
-            value: person.id
+            value: person.i
             }
     });
     
@@ -94,7 +114,7 @@ async function updateRole() {
             choices: roleChoices
         }]);
 
-    await db.promise().query(`UPDATE employees SET role_id = ? WHERE id = ?`, [roleId, employeeId])
+    await db.promise().query(`UPDATE employees SET role_id = ? WHERE id = ?`, [roleId, employeeId]);
     console.log('Successfully updated employee!');
     askQuestions();
 };

@@ -3,9 +3,10 @@
     "console.table": "^0.10.0",
     "express": "^4.17.1",
     "inquirer": "^8.1.0",
+    "mysql": "^2.18.1",
     "mysql2": "^2.2.5"
   },
-  "name": "SQL-employee-tracker",
+  "name": "sql-employee-tracker",
   "description": "",
   "version": "1.0.0",
   "main": "index.js",
@@ -23,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/sharni595/SQL-employee-tracker/issues"
   },
-  "homepage": "https://github.com/sharni595/SQL-employee-tracker#readme"
+  "homepage": "https://github.com/sharni595/SQL-employee-tracker#readme",
+  "devDependencies": {
+    "ws": "3.3.2"
+  }
 }

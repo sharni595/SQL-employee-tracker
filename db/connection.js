@@ -11,7 +11,9 @@ const db = mysql.createConnection(
     console.log('Connected to the tracker database')
 );
 
-db.connect();
+db.connect(function(err){
+    if (err) throw err;
+});
 
 db.connect = util.promisify(db.connect);
 
